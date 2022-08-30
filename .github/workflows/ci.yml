@@ -22,7 +22,7 @@ jobs:
         file src/lib/plumed.exe
     - uses: actions/upload-artifact@v3
       with:
-        name: windows-executable
+        name: windows-executable.zip
         path: src/lib/plumed.exe
 
   mingw-regtest:
@@ -33,7 +33,11 @@ jobs:
     - uses: actions/download-artifact@v3
       with:
         name: windows-executable
-    - run: 7z x windows-executable.zip
+    - run: |
+        dir
+        7z x windows-executable.zip
+        "PLUMED_PREPEND_PATH=$pwd" >> $env:GITHUB_ENV
+    - run: env
     - uses: conda-incubator/setup-miniconda@v2
       with:
         miniforge-version: latest
