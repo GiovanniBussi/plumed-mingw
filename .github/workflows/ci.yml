@@ -9,10 +9,10 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v2
-    - name: Install generic packages
-      run: |
-        sudo apt-get install -y gawk
-        sudo apt-get install -y binutils-mingw-w64-x86-64 gcc-mingw-w64-x86-64 g++-mingw-w64-x86-64
+#   - name: Install generic packages
+#     run: |
+#       sudo apt-get install -y gawk
+#       sudo apt-get install -y binutils-mingw-w64-x86-64 gcc-mingw-w64-x86-64 g++-mingw-w64-x86-64
 #   - name: Build PLUMED
 #     run: |
 #       ./configure --host=x86_64-w64-mingw32
