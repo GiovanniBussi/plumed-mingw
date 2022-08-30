@@ -32,3 +32,4 @@ jobs:
         echo "wine $PWD/bin/plumed.exe "'"$@"' >> bin/plumed
         chmod +x bin/plumed
         plumed --help
+        make -C regtest/basic
