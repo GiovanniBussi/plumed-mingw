@@ -32,7 +32,7 @@ jobs:
     - uses: actions/checkout@v2
     - uses: actions/download-artifact@v3
       with:
-        name: windows-executable
+        name: windows-executable.zip
     - run: |
         dir
         7z x windows-executable.zip
