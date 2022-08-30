@@ -291,8 +291,8 @@ for file in *.reference ; do
   if test -f "$new" ; then
     ../../../scripts/fixzeroes.sh "$file"
     cp "$new" "$new.zfix"
-    ../../../scripts/fixzeroes.sh "$new.zfix"
     dos2unix "$new.zfix"
+    ../../../scripts/fixzeroes.sh "$new.zfix"
     DIFFOPT=""
 # this is to enforce ASCII check
 # I add this option since sometime on travis some of the diff files are not shown
