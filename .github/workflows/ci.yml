@@ -35,7 +35,6 @@ jobs:
         name: windows-executable.zip
     - run: |
         dir
-        7z x windows-executable.zip
         "PLUMED_PREPEND_PATH=$pwd" >> $env:GITHUB_ENV
     - run: env
     - uses: conda-incubator/setup-miniconda@v2
