@@ -28,5 +28,7 @@ jobs:
       run: |
         sudo apt-get install -y wine
         PATH="$PWD/bin:$PATH"
-        echo "wine $PWD/bin/plumed.exe" > bin/plumed
+        echo "#! /bin/bash"                    >  bin/plumed
+        echo "wine $PWD/bin/plumed.exe "'"$@"' >> bin/plumed
         chmod +x bin/plumed
+        plumed --help
