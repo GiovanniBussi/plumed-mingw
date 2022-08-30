@@ -26,7 +26,7 @@ jobs:
 # quick tests using precompiled bin:
     - name: Test
       run: |
-        sudo apt-get install -y wine
+        sudo apt-get install -y wine dos2unix
         PATH="$PWD/bin:$PATH"
         echo "#! /bin/bash"                    >  bin/plumed
         echo "wine $PWD/bin/plumed.exe "'"$@"' >> bin/plumed
