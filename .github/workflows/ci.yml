@@ -13,13 +13,20 @@ jobs:
       run: |
         sudo apt-get install -y gawk
         sudo apt-get install -y binutils-mingw-w64-x86-64 gcc-mingw-w64-x86-64 g++-mingw-w64-x86-64
-    - name: Build PLUMED
+#   - name: Build PLUMED
+#     run: |
+#       ./configure --host=x86_64-w64-mingw32
+#       make -j 4
+#       ls -ltr src/lib
+#       file src/lib/plumed.exe
+#   - uses: actions/upload-artifact@v3
+#     with:
+#       name: windows-executable
+#       path: src/lib/plumed.exe
+# quick tests using precompiled bin:
+    - name: Test
       run: |
-        ./configure --host=x86_64-w64-mingw32
-        make -j 4
-        ls -ltr src/lib
-        file src/lib/plumed.exe
-    - uses: actions/upload-artifact@v3
-      with:
-        name: windows-executable
-        path: src/lib/plumed.exe
+        sudo apt-get install -y wine
+        PATH="$PWD/bin:$PATH"
+        echo "wine $PWD/bin/plumed.exe" > bin/plumed
+        chmod +x bin/plumed
