@@ -46,6 +46,10 @@ jobs:
         plumed --help
         export PLUMED_DIFFOPT=--strip-trailing-cr
         make -C regtest/basic
+    - uses: actions/upload-artifact@v3
+      with:
+        name: wine-regtest-results.zip
+        path: regtest\**\report.txt
 
   mingw-regtest:
     runs-on: windows-latest
