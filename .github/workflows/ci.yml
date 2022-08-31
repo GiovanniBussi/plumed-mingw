@@ -22,7 +22,7 @@ jobs:
       run: |
         ccache -s -M 100M
         # see https://stackoverflow.com/questions/18138635/mingw-exe-requires-a-few-gcc-dlls-regardless-of-the-code
-        ./configure --host=x86_64-w64-mingw32 CXX="ccache x86_64-w64-mingw32-g++" --disable-shared STATIC_LIBS="-static -static-libgcc -static-libstdc++"
+        ./configure --host=x86_64-w64-mingw32 CXX="ccache x86_64-w64-mingw32-g++" FC=none --disable-shared STATIC_LIBS="-static -static-libgcc -static-libstdc++"
         make -j 4
         ls -ltr src/lib
         file src/lib/plumed.exe
