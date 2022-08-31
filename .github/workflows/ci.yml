@@ -9,17 +9,24 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v2
+    - uses: actions/cache@v2
+      with:
+        path: ~/.ccache
+        key: ccache-1-mingw-hash-${{ github.sha }}
+        restore-keys: ccache-1-mingw-hash-
     - name: Install generic packages
       run: |
-        sudo apt-get install -y gawk
+        sudo apt-get install -y gawk ccache
         sudo apt-get install -y binutils-mingw-w64-x86-64 gcc-mingw-w64-x86-64 g++-mingw-w64-x86-64
     - name: Build PLUMED
       run: |
+        ccache -s -M 100M
         # see https://stackoverflow.com/questions/18138635/mingw-exe-requires-a-few-gcc-dlls-regardless-of-the-code
-        ./configure --host=x86_64-w64-mingw32 --disable-shared STATIC_LIBS="-static -static-libgcc -static-libstdc++"
+        ./configure --host=x86_64-w64-mingw32 CXX="ccache x86_64-w64-mingw32-g++" --disable-shared STATIC_LIBS="-static -static-libgcc -static-libstdc++"
         make -j 4
         ls -ltr src/lib
         file src/lib/plumed.exe
+        ccache -s -M 100M
     - uses: actions/upload-artifact@v3
       with:
         name: windows-executable.zip
