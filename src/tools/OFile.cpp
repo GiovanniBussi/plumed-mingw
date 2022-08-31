@@ -326,7 +326,7 @@ OFile& OFile::open(const std::string&path) {
   this->path=path;
   this->path=appendSuffix(path,getSuffix());
   if(checkRestart()) {
-    fp=std::fopen(const_cast<char*>(this->path.c_str()),"a");
+    fp=std::fopen(const_cast<char*>(this->path.c_str()),"ab");
     mode="a";
     if(Tools::extension(this->path)=="gz") {
 #ifdef __PLUMED_HAS_ZLIB
@@ -338,7 +338,7 @@ OFile& OFile::open(const std::string&path) {
   } else {
     backupFile( backstring, this->path );
     if(comm)comm->Barrier();
-    fp=std::fopen(const_cast<char*>(this->path.c_str()),"w");
+    fp=std::fopen(const_cast<char*>(this->path.c_str()),"wb");
     mode="w";
     if(Tools::extension(this->path)=="gz") {
 #ifdef __PLUMED_HAS_ZLIB
@@ -380,7 +380,7 @@ OFile& OFile::rewind() {
 #ifdef __PLUMED_HAS_ZLIB
     gzfp=(void*)gzopen(const_cast<char*>(this->path.c_str()),"w9");
 #endif
-  } else fp=std::fopen(const_cast<char*>(path.c_str()),"w");
+  } else fp=std::fopen(const_cast<char*>(path.c_str()),"wb");
   return *this;
 }
 
@@ -393,7 +393,7 @@ FileBase& OFile::flush() {
 #endif
     } else {
       fclose(fp);
-      fp=std::fopen(const_cast<char*>(path.c_str()),"a");
+      fp=std::fopen(const_cast<char*>(path.c_str()),"ab");
     }
   } else {
     FileBase::flush();
