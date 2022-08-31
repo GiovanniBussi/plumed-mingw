@@ -5,7 +5,7 @@ on:
   pull_request:
 
 jobs:
-  linux:
+  mingw-build:
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v2
@@ -22,5 +22,28 @@ jobs:
         file src/lib/plumed.exe
     - uses: actions/upload-artifact@v3
       with:
-        name: windows-executable
+        name: windows-executable.zip
         path: src/lib/plumed.exe
+
+  mingw-regtest:
+    runs-on: windows-latest
+    needs: mingw-build
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/download-artifact@v3
+      with:
+        name: windows-executable.zip
+    - run: |
+        dir
+        "PLUMED_PREPEND_PATH=$pwd" >> $env:GITHUB_ENV
+    - run: env
+    - uses: conda-incubator/setup-miniconda@v2
+      with:
+        miniforge-version: latest
+    - run: conda install -y m2-base m2-diffutils m2-sed make
+    - run: make -C regtest\basic
+    - uses: actions/upload-artifact@v3
+      with:
+        name: mingw-regtest-results.zip
+        path: regtest\**\report.txt
+    
