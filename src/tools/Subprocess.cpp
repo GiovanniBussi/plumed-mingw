@@ -101,9 +101,9 @@ Subprocess::Subprocess(const std::string & cmd) {
     if(close(cp[1])<0) plumed_error()<<"error closing file";
     fpc=pc[1];
     fcp=cp[0];
-    fppc=fdopen(fpc,"w");
+    fppc=fdopen(fpc,"wb");
     parent_to_child.link(fppc);
-    fpcp=fdopen(fcp,"r");
+    fpcp=fdopen(fcp,"rb");
     child_to_parent.link(fpcp);
   }
 #else

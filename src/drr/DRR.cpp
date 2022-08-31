@@ -337,7 +337,7 @@ DRRForceGrid::getCountsLogDerivative(const vector<double> &pos) const {
 void DRRForceGrid::write1DPMF(string filename) const {
   filename += suffix + ".pmf";
   FILE *ppmf;
-  ppmf = fopen(filename.c_str(), "w");
+  ppmf = fopen(filename.c_str(), "wb");
   const double w = dimensions[0].binWidth;
   double pmf = 0;
   fprintf(ppmf, "%.9f %.9f\n", endpoints[0], pmf);
@@ -357,11 +357,11 @@ void DRRForceGrid::writeAll(const string &filename, bool addition) const {
   vector<double> pos(ndims, 0);
   FILE *pGrad, *pCount;
   if (addition) {
-    pGrad = fopen(gradname.c_str(), "a");
-    pCount = fopen(countname.c_str(), "a");
+    pGrad = fopen(gradname.c_str(), "ab");
+    pCount = fopen(countname.c_str(), "ab");
   } else {
-    pGrad = fopen(gradname.c_str(), "w");
-    pCount = fopen(countname.c_str(), "w");
+    pGrad = fopen(gradname.c_str(), "wb");
+    pCount = fopen(countname.c_str(), "wb");
   }
 
   char *buffer1, *buffer2;
@@ -397,7 +397,7 @@ void DRRForceGrid::writeDivergence(const string &filename) const {
   string divname = filename + suffix + ".div";
   vector<double> pos(ndims, 0);
   FILE *pDiv;
-  pDiv = fopen(divname.c_str(), "w");
+  pDiv = fopen(divname.c_str(), "wb");
   fwrite(headers.c_str(), sizeof(char), strlen(headers.c_str()), pDiv);
   for (size_t i = 0; i < sampleSize; ++i) {
     for (size_t j = 0; j < ndims; ++j) {
@@ -514,9 +514,9 @@ void CZAR:: writeZCount(const string &filename, bool addition) const {
   vector<double> pos(ndims, 0);
   FILE *pCount;
   if (addition) {
-    pCount = fopen(countname.c_str(), "a");
+    pCount = fopen(countname.c_str(), "ab");
   } else {
-    pCount = fopen(countname.c_str(), "w");
+    pCount = fopen(countname.c_str(), "wb");
   }
   char *buffer;
   buffer = (char *)malloc((sizeof(double)) * sampleSize * ndims);

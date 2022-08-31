@@ -759,7 +759,7 @@ void LogMFD::calculate() {
 
     // open LogMFD's log file
     if( multi_sim_comm.Get_rank()==0 && comm.Get_rank()==0 ) {
-      FILE *outlog = std::fopen("logmfd.out", "w");
+      FILE *outlog = std::fopen("logmfd.out", "wb");
 
       // output messages to LogMFD's log file
       if( multi_sim_comm.Get_size()>1 ) {
@@ -799,7 +799,7 @@ void LogMFD::calculate() {
 
     if( comm.Get_rank()==0 ) {
       // the number of replica is added to file name to distingwish replica.
-      FILE *outlog2 = fopen("replica.out", "w");
+      FILE *outlog2 = fopen("replica.out", "wb");
       fprintf(outlog2, "# Replica No. %d of %d.\n",
               multi_sim_comm.Get_rank(), multi_sim_comm.Get_size() );
 
@@ -888,7 +888,7 @@ void LogMFD::update() {
 
   // record log for fictitious variables
   if( multi_sim_comm.Get_rank()==0 && comm.Get_rank()==0 ) {
-    FILE *outlog = std::fopen("logmfd.out", "a");
+    FILE *outlog = std::fopen("logmfd.out", "ab");
 
     const double ekin = calcEkin();
     const double temp = 2.0*ekin/getNumberOfArguments()/plumed.getAtoms().getKBoltzmann();
@@ -910,7 +910,7 @@ void LogMFD::update() {
   // record log for collective variables
   if( comm.Get_rank()==0 ) {
     // the number of replica is added to file name to distingwish replica.
-    FILE *outlog2 = fopen("replica.out", "a");
+    FILE *outlog2 = fopen("replica.out", "ab");
     fprintf(outlog2, "%*d", 8, (int)getStep()/interval);
     fprintf(outlog2, "%16.6e ", work);
     fprintf(outlog2, "%16.6e ", weight);

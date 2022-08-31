@@ -143,7 +143,7 @@ int PathTools::main(FILE* in, FILE*out,Communicator& pc) {
   std::string ofilename; parse("--out",ofilename);
   if( ifilename.length()>0 ) {
     std::fprintf(out,"Reparameterising path in file named %s so that all frames are equally spaced \n",ifilename.c_str() );
-    FILE* fp=fopen(ifilename.c_str(),"r");
+    FILE* fp=fopen(ifilename.c_str(),"rb");
     bool do_read=true; std::vector<std::unique_ptr<ReferenceConfiguration>> frames;
     while (do_read) {
       PDB mypdb;
@@ -213,14 +213,14 @@ int PathTools::main(FILE* in, FILE*out,Communicator& pc) {
   }
 
 // Read initial frame
-  std::string istart; parse("--start",istart); FILE* fp2=fopen(istart.c_str(),"r"); PDB mystartpdb;
+  std::string istart; parse("--start",istart); FILE* fp2=fopen(istart.c_str(),"rb"); PDB mystartpdb;
   if( istart.length()==0 ) error("input is missing use --istart + --iend or --path");
   if( !mystartpdb.readFromFilepointer(fp2,false,0.1) ) error("could not read fila " + istart);
   auto sframe=metricRegister().create<ReferenceConfiguration>( mtype, mystartpdb );
   fclose(fp2);
 
 // Read final frame
-  std::string iend; parse("--end",iend); FILE* fp1=fopen(iend.c_str(),"r"); PDB myendpdb;
+  std::string iend; parse("--end",iend); FILE* fp1=fopen(iend.c_str(),"rb"); PDB myendpdb;
   if( iend.length()==0 ) error("input is missing using --istart + --iend or --path");
   if( !myendpdb.readFromFilepointer(fp1,false,0.1) ) error("could not read fila " + iend);
   auto eframe=metricRegister().create<ReferenceConfiguration>( mtype, myendpdb );

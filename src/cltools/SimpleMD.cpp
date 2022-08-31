@@ -192,7 +192,7 @@ private:
 
   void read_natoms(const std::string & inputfile,int & natoms) {
 // read the number of atoms in file "input.xyz"
-    FILE* fp=fopen(inputfile.c_str(),"r");
+    FILE* fp=fopen(inputfile.c_str(),"rb");
     if(!fp) {
       std::fprintf(stderr,"ERROR: file %s not found\n",inputfile.c_str());
       std::exit(1);
@@ -209,7 +209,7 @@ private:
   void read_positions(const std::string& inputfile,int natoms,std::vector<Vector>& positions,double cell[3]) {
 // read positions and cell from a file called inputfile
 // natoms (input variable) and number of atoms in the file should be consistent
-    FILE* fp=fopen(inputfile.c_str(),"r");
+    FILE* fp=fopen(inputfile.c_str(),"rb");
     if(!fp) {
       std::fprintf(stderr,"ERROR: file %s not found\n",inputfile.c_str());
       std::exit(1);
@@ -347,10 +347,10 @@ private:
     Vector pos;
     FILE*fp;
     if(write_positions_first) {
-      fp=fopen(trajfile.c_str(),"w");
+      fp=fopen(trajfile.c_str(),"wb");
       write_positions_first=false;
     } else {
-      fp=fopen(trajfile.c_str(),"a");
+      fp=fopen(trajfile.c_str(),"ab");
     }
     std::fprintf(fp,"%d\n",natoms);
     std::fprintf(fp,"%f %f %f\n",cell[0],cell[1],cell[2]);
@@ -369,7 +369,7 @@ private:
 // write positions on file outputfile
     Vector pos;
     FILE*fp;
-    fp=fopen(outputfile.c_str(),"w");
+    fp=fopen(outputfile.c_str(),"wb");
     std::fprintf(fp,"%d\n",natoms);
     std::fprintf(fp,"%f %f %f\n",cell[0],cell[1],cell[2]);
     for(int iatom=0; iatom<natoms; iatom++) {
@@ -388,13 +388,13 @@ private:
 // write statistics on file statfile
     if(write_statistics_first) {
 // first time this routine is called, open the file
-      write_statistics_fp=fopen(statfile.c_str(),"w");
+      write_statistics_fp=fopen(statfile.c_str(),"wb");
       write_statistics_first=false;
     }
     if(istep-write_statistics_last_time_reopened>100) {
 // every 100 steps, reopen the file to flush the buffer
       fclose(write_statistics_fp);
-      write_statistics_fp=fopen(statfile.c_str(),"a");
+      write_statistics_fp=fopen(statfile.c_str(),"ab");
       write_statistics_last_time_reopened=istep;
     }
     std::fprintf(write_statistics_fp,"%d %f %f %f %f %f\n",istep,istep*tstep,2.0*engkin/double(ndim*natoms),engconf,engkin+engconf,engkin+engconf+engint);

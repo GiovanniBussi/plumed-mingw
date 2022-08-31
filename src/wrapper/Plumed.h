@@ -3017,7 +3017,7 @@ void* plumed_attempt_dlopen(const char*path,int mode) {
   p=__PLUMED_WRAPPER_CXX_NULLPTR;
   pc=__PLUMED_WRAPPER_CXX_NULLPTR;
   strlenpath=0;
-  fp=__PLUMED_WRAPPER_STD fopen(path,"r");
+  fp=__PLUMED_WRAPPER_STD fopen(path,"rb");
   if(!fp) {
     __PLUMED_FPRINTF(stderr,"+++ File %s does not exist or cannot be read\n",path);
     return __PLUMED_WRAPPER_CXX_NULLPTR;
@@ -3047,7 +3047,7 @@ void* plumed_attempt_dlopen(const char*path,int mode) {
       __PLUMED_WRAPPER_STD memmove(pc, pc+6, __PLUMED_WRAPPER_STD strlen(pc)-5);
       __PLUMED_FPRINTF(stderr,"+++ This error is expected if you are trying to load a kernel <=2.4\n");
       __PLUMED_FPRINTF(stderr,"+++ Trying %s +++\n",pathcopy);
-      fp=__PLUMED_WRAPPER_STD fopen(path,"r");
+      fp=__PLUMED_WRAPPER_STD fopen(path,"rb");
       if(!fp) {
         __PLUMED_FPRINTF(stderr,"+++ File %s does not exist or cannot be read\n",pathcopy);
         __PLUMED_FREE(pathcopy);

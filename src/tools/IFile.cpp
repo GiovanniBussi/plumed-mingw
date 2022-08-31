@@ -111,10 +111,10 @@ IFile& IFile::open(const std::string&path) {
   gzfp=NULL;
   bool do_exist=FileExist(path);
   plumed_massert(do_exist,"file " + path + " cannot be found");
-  fp=std::fopen(const_cast<char*>(this->path.c_str()),"r");
+  fp=std::fopen(const_cast<char*>(this->path.c_str()),"rb");
   if(Tools::extension(this->path)=="gz") {
 #ifdef __PLUMED_HAS_ZLIB
-    gzfp=(void*)gzopen(const_cast<char*>(this->path.c_str()),"r");
+    gzfp=(void*)gzopen(const_cast<char*>(this->path.c_str()),"rb");
 #else
     plumed_merror("file " + getPath() + ": trying to use a gz file without zlib being linked");
 #endif

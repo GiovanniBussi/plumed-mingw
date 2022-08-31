@@ -95,7 +95,7 @@ SketchMapRead::SketchMapRead( const ActionOptions& ao ):
 
   parse("TYPE",mtype); bool skipchecks; parseFlag("DISABLE_CHECKS",skipchecks);
   std::string ifilename; parse("REFERENCE",ifilename);
-  FILE* fp=fopen(ifilename.c_str(),"r");
+  FILE* fp=fopen(ifilename.c_str(),"rb");
   if(!fp) error("could not open reference file " + ifilename );
 
   // Read in the embedding
