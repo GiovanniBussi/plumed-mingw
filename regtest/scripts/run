@@ -299,6 +299,7 @@ for file in *.reference ; do
 # In this way, at least PLUMED native files (with fields) will be assumed to be
 # ASCII and diff will be shown in the log
     test "$(head -c 10 "$file")" = "#! FIELDS " && DIFFOPT="-a"
+    DIFFOPT="$DIFFOPT $PLUMED_DIFFOPT"
     out="$(diff $DIFFOPT "$file" "$new.zfix")"
     test -n "$out" && {
       echo FAILURE
