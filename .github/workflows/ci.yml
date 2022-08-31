@@ -6,14 +6,14 @@ on:
 
 jobs:
   mingw-build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v2
     - uses: actions/cache@v2
       with:
         path: ~/.ccache
-        key: ccache-1-mingw-hash-${{ github.sha }}
-        restore-keys: ccache-1-mingw-hash-
+        key: ccache-2-mingw-hash-${{ github.sha }}
+        restore-keys: ccache-2-mingw-hash-
     - name: Install generic packages
       run: |
         sudo apt-get install -y gawk ccache
@@ -32,7 +32,7 @@ jobs:
         name: windows-executable.zip
         path: src/lib/plumed.exe
   wine-regtest:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     needs: mingw-build
     steps:
     - uses: actions/checkout@v2
