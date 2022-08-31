@@ -35,6 +35,7 @@ jobs:
     - name: Install packages
       run: |
         sudo apt-get install -y wine dos2unix
+        sudo dpkg --add-architecture i386 && sudo apt-get update && sudo apt-get install wine32
     - name: Test
       run: |
         PATH="$PWD/bin:$PATH"
