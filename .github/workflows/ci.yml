@@ -51,7 +51,7 @@ jobs:
         echo "wine $PWD/bin/plumed.exe "'"$@"' >> bin/plumed
         chmod +x bin/plumed
         plumed --help
-        export PLUMED_DIFFOPT=--strip-trailing-cr
+        export PLUMED_REGTEST_DOS2UNIX=dos2unix
         make -C regtest/basic
     - uses: actions/upload-artifact@v3
       with:
