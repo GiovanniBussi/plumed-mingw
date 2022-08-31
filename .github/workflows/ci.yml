@@ -24,6 +24,28 @@ jobs:
       with:
         name: windows-executable.zip
         path: src/lib/plumed.exe
+  wine-regtest:
+    runs-on: ubuntu-20.04
+    needs: mingw-build
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/download-artifact@v3
+      with:
+        name: windows-executable.zip
+    - name: Install packages
+      run: |
+        sudo apt-get install -y wine dos2unix
+    - name: Test
+      run: |
+        PATH="$PWD/bin:$PATH"
+        mkdir bin
+        mv plumed.exe bin/
+        echo "#! /bin/bash"                    >  bin/plumed
+        echo "wine $PWD/bin/plumed.exe "'"$@"' >> bin/plumed
+        chmod +x bin/plumed
+        plumed --help
+        export PLUMED_DIFFOPT=--strip-trailing-cr
+        make -C regtest/basic
 
   mingw-regtest:
     runs-on: windows-latest
