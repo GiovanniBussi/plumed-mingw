@@ -91,7 +91,7 @@ static void *open_pdb_read(const char *filepath, const char *filetype,
   char pdbstr[PDB_BUFFER_LENGTH];
   int indx, nconect;
 
-  fd = fopen(filepath, "rb");
+  fd = fopen(filepath, "r");
   if (!fd) 
     return NULL;
   pdb = (pdbdata *)malloc(sizeof(pdbdata));
@@ -336,7 +336,7 @@ static void *open_file_write(const char *path, const char *filetype,
 
   FILE *fd;
   pdbdata *pdb;
-  fd = fopen(path, "wb");
+  fd = fopen(path, "w");
   if (!fd) {
     fprintf(stderr, "Unable to open file %s for writing\n", path);
     return NULL;

@@ -353,7 +353,7 @@ int Driver<real>::main(FILE* in,FILE*out,Communicator& pc) {
     parse("--debug-grex-log",file);
     if(file.length()>0) {
       file+="."+n;
-      grex_log=fopen(file.c_str(),"wb");
+      grex_log=fopen(file.c_str(),"w");
     }
   }
 
@@ -543,7 +543,7 @@ int Driver<real>::main(FILE* in,FILE*out,Communicator& pc) {
         std::string n;
         Tools::convert(intercomm.Get_rank(),n);
         std::string testfile=FileBase::appendSuffix(trajectoryFile,"."+n);
-        FILE* tmp_fp=fopen(testfile.c_str(),"rb");
+        FILE* tmp_fp=fopen(testfile.c_str(),"r");
         if(tmp_fp) { fclose(tmp_fp); trajectoryFile=testfile.c_str();}
       }
       if(use_molfile==true) {
@@ -566,7 +566,7 @@ int Driver<real>::main(FILE* in,FILE*out,Communicator& pc) {
         if(trajectory_fmt=="xdr-xtc") xdrfile::read_xtc_natoms(&trajectoryFile[0],&natoms);
         if(trajectory_fmt=="xdr-trr") xdrfile::read_trr_natoms(&trajectoryFile[0],&natoms);
       } else {
-        fp=fopen(trajectoryFile.c_str(),"rb");
+        fp=fopen(trajectoryFile.c_str(),"r");
         if(!fp) {
           std::string msg="ERROR: Error opening trajectory file "+trajectoryFile;
           std::fprintf(stderr,"%s\n",msg.c_str());
@@ -580,7 +580,7 @@ int Driver<real>::main(FILE* in,FILE*out,Communicator& pc) {
         Tools::convert(pc.Get_rank(),n);
         dumpforces+="."+n;
       }
-      fp_forces=fopen(dumpforces.c_str(),"wb");
+      fp_forces=fopen(dumpforces.c_str(),"w");
     }
     if(debugforces.length()>0) {
       if(Communicator::initialized() && pc.Get_size()>1) {

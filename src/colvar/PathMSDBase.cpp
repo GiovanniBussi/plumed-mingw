@@ -63,7 +63,7 @@ PathMSDBase::PathMSDBase(const ActionOptions&ao):
   parseFlag("NOPBC",nopbc);
 
   // open the file
-  FILE* fp=fopen(reference.c_str(),"rb");
+  FILE* fp=fopen(reference.c_str(),"r");
   std::vector<AtomNumber> aaa;
   if (fp!=NULL)
   {

@@ -393,7 +393,7 @@ bool PDB::readFromFilepointer(FILE *fp,bool naturalUnits,double scale) {
 }
 
 bool PDB::read(const std::string&file,bool naturalUnits,double scale) {
-  FILE* fp=fopen(file.c_str(),"rb");
+  FILE* fp=fopen(file.c_str(),"r");
   if(!fp) return false;
   readFromFilepointer(fp,naturalUnits,scale);
   fclose(fp);

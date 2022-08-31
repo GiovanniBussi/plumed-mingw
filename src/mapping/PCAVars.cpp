@@ -227,7 +227,7 @@ PCAVars::PCAVars(const ActionOptions& ao):
 
   // Open reference file
   std::string reference; parse("REFERENCE",reference);
-  FILE* fp=fopen(reference.c_str(),"rb");
+  FILE* fp=fopen(reference.c_str(),"r");
   if(!fp) error("could not open reference file " + reference );
 
   // Read all reference configurations

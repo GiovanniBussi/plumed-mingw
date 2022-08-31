@@ -295,7 +295,7 @@ void OFile::backupFile( const std::string& bstring, const std::string& fname ) {
   int maxbackup=100;
   if(std::getenv("PLUMED_MAXBACKUP")) Tools::convert(std::getenv("PLUMED_MAXBACKUP"),maxbackup);
   if(maxbackup>0 && (!comm || comm->Get_rank()==0)) {
-    FILE* ff=std::fopen(const_cast<char*>(fname.c_str()),"rb");
+    FILE* ff=std::fopen(const_cast<char*>(fname.c_str()),"r");
     if(ff) {
       std::fclose(ff);
       std::string backup;
@@ -307,7 +307,7 @@ void OFile::backupFile( const std::string& bstring, const std::string& fname ) {
         Tools::convert(i,num);
         if(i>maxbackup) plumed_merror("cannot backup file "+file+" maximum number of backup is "+num+"\n");
         backup=directory+bstring +"."+num+"."+file;
-        FILE* fff=std::fopen(backup.c_str(),"rb");
+        FILE* fff=std::fopen(backup.c_str(),"r");
         if(!fff) break;
         else std::fclose(fff);
       }
@@ -326,8 +326,8 @@ OFile& OFile::open(const std::string&path) {
   this->path=path;
   this->path=appendSuffix(path,getSuffix());
   if(checkRestart()) {
-    fp=std::fopen(const_cast<char*>(this->path.c_str()),"ab");
-    mode="ab";
+    fp=std::fopen(const_cast<char*>(this->path.c_str()),"a");
+    mode="a";
     if(Tools::extension(this->path)=="gz") {
 #ifdef __PLUMED_HAS_ZLIB
       gzfp=(void*)gzopen(const_cast<char*>(this->path.c_str()),"a9");
@@ -338,8 +338,8 @@ OFile& OFile::open(const std::string&path) {
   } else {
     backupFile( backstring, this->path );
     if(comm)comm->Barrier();
-    fp=std::fopen(const_cast<char*>(this->path.c_str()),"wb");
-    mode="wb";
+    fp=std::fopen(const_cast<char*>(this->path.c_str()),"w");
+    mode="w";
     if(Tools::extension(this->path)=="gz") {
 #ifdef __PLUMED_HAS_ZLIB
       gzfp=(void*)gzopen(const_cast<char*>(this->path.c_str()),"w9");
@@ -380,7 +380,7 @@ OFile& OFile::rewind() {
 #ifdef __PLUMED_HAS_ZLIB
     gzfp=(void*)gzopen(const_cast<char*>(this->path.c_str()),"w9");
 #endif
-  } else fp=std::fopen(const_cast<char*>(path.c_str()),"wb");
+  } else fp=std::fopen(const_cast<char*>(path.c_str()),"w");
   return *this;
 }
 
@@ -389,11 +389,11 @@ FileBase& OFile::flush() {
     if(gzfp) {
 #ifdef __PLUMED_HAS_ZLIB
       gzclose(gzFile(gzfp));
-      gzfp=(void*)gzopen(const_cast<char*>(path.c_str()),"ab");
+      gzfp=(void*)gzopen(const_cast<char*>(path.c_str()),"a");
 #endif
     } else {
       fclose(fp);
-      fp=std::fopen(const_cast<char*>(path.c_str()),"ab");
+      fp=std::fopen(const_cast<char*>(path.c_str()),"a");
     }
   } else {
     FileBase::flush();

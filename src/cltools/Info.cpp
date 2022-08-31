@@ -95,14 +95,14 @@ int Info::main(FILE* in, FILE*out,Communicator& pc) {
   if(printincludedir) std::fprintf(out,"%s\n",config::getPlumedIncludedir().c_str());
   if(printuserdoc) {
     std::string userdoc=config::getPlumedHtmldir()+"/user-doc/html/index.html";
-    FILE *ff=std::fopen(userdoc.c_str(),"rb");
+    FILE *ff=std::fopen(userdoc.c_str(),"r");
     if(ff) std::fclose(ff);
     else userdoc="http://www.plumed.org/doc-v" + config::getVersion() + "/user-doc/html/index.html";
     std::fprintf(out,"%s\n",userdoc.c_str());
   }
   if(printdeveloperdoc) {
     std::string developerdoc=config::getPlumedHtmldir()+"/developer-doc/html/index.html";
-    FILE *ff=std::fopen(developerdoc.c_str(),"rb");
+    FILE *ff=std::fopen(developerdoc.c_str(),"r");
     if(ff) std::fclose(ff);
     else developerdoc="http://www.plumed.org/doc-v" + config::getVersion() + "/developer-doc/html/index.html";
     std::fprintf(out,"%s\n",developerdoc.c_str());

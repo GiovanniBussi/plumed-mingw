@@ -357,7 +357,7 @@ PIV::PIV(const ActionOptions&ao):
   // Reference PDB file
   parse("REF_FILE",ref_file);
   PDB mypdb;
-  FILE* fp=fopen(ref_file.c_str(),"rb");
+  FILE* fp=fopen(ref_file.c_str(),"r");
   if (fp!=NULL) {
     log<<"Opening PDB file with reference frame: "<<ref_file.c_str()<<"\n";
     mypdb.readFromFilepointer(fp,plumed.getAtoms().usingNaturalUnits(),0.1/atoms.getUnits().getLength());

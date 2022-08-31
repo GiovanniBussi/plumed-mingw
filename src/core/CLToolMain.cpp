@@ -241,7 +241,7 @@ int CLToolMain::run(int argc, char **argv,FILE*in,FILE*out,Communicator& pc) {
       std::string manual;
 #ifdef __PLUMED_HAS_POPEN
       std::string cmd=config::getEnvCommand()+" \""+root+"/scripts/"+availableShell[j]+".sh\" --description";
-      FILE *fp=popen(cmd.c_str(),"rb");
+      FILE *fp=popen(cmd.c_str(),"r");
       std::string line;
       while(Tools::getline(fp,line))manual+=line;
       pclose(fp);

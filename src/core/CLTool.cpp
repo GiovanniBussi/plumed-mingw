@@ -161,7 +161,7 @@ bool CLTool::readInputFile( int argc, char**argv, FILE* in, FILE*out ) {
 
   FILE* mystdin=in;
   if(argc==2) {
-    mystdin=fopen(argv[1],"rb");
+    mystdin=fopen(argv[1],"r");
     if(!mystdin) {
       std::fprintf(stderr,"ERROR: cannot open file %s\n\n",argv[1]);
       std::fprintf(out,"Usage: %s < inputFile \n", name.c_str() );

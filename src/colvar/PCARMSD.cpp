@@ -162,7 +162,7 @@ PCARMSD::PCARMSD(const ActionOptions&ao):
 
   // now get the eigenvectors
   // open the file
-  FILE* fp=fopen(f_eigenvectors.c_str(),"rb");
+  FILE* fp=fopen(f_eigenvectors.c_str(),"r");
   std::vector<AtomNumber> aaa;
   unsigned neigenvects;
   neigenvects=0;
