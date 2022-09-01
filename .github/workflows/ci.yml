@@ -78,7 +78,8 @@ jobs:
       with:
         miniforge-version: latest
     - run: conda install -y m2-base m2-diffutils m2-sed make m2-dos2unix
-    - run: plumed config show
+    - run: |
+        bash -c "plumed config show"
     - run: make -C regtest\basic
     - uses: actions/upload-artifact@v3
       with:
