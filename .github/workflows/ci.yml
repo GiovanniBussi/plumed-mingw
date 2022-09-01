@@ -58,7 +58,7 @@ jobs:
         name: wine-regtest-results.zip
         path: regtest/**/report.txt
 
-  mingw-regtest:
+  windows-regtest:
     runs-on: windows-latest
     needs: mingw-build
     steps:
@@ -78,6 +78,6 @@ jobs:
     - run: make -C regtest\basic
     - uses: actions/upload-artifact@v3
       with:
-        name: mingw-regtest-results.zip
+        name: windows-regtest-results.zip
         path: regtest\**\report.txt
     
