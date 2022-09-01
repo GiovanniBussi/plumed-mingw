@@ -52,6 +52,8 @@ jobs:
         chmod +x bin/plumed
         plumed --help
         export PLUMED_REGTEST_DOS2UNIX=dos2unix
+        export PLUMED_ROOT="$PWD"
+        plumed config show
         make -C regtest/basic
     - uses: actions/upload-artifact@v3
       with:
@@ -69,12 +71,14 @@ jobs:
     - run: |
         dir
         "PLUMED_PREPEND_PATH=$pwd" >> $env:GITHUB_ENV
+        "PLUMED_ROOT=$pwd" >> $env:GITHUB_ENV
         "PLUMED_REGTEST_DOS2UNIX=dos2unix" >> $env:GITHUB_ENV
     - run: env
     - uses: conda-incubator/setup-miniconda@v2
       with:
         miniforge-version: latest
     - run: conda install -y m2-base m2-diffutils m2-sed make m2-dos2unix
+    - run: plumed config show
     - run: make -C regtest\basic
     - uses: actions/upload-artifact@v3
       with:
